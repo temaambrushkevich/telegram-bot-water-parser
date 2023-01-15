@@ -241,9 +241,6 @@ def error(message):
                      parse_mode='html', reply_markup=markup)
 
 
-def aboba():
-    print("aboba")
-
 
 def schedule_checker():
     while True:
@@ -251,8 +248,8 @@ def schedule_checker():
         time.sleep(60)
 
 if __name__ == '__main__':
-    schedule.every().day.at("18:50").do(parsing_price)
-    schedule.every().day.at("19:05").do(parsing_stock)
+    schedule.every().day.at("00:00").do(parsing_price)
+    schedule.every().day.at("15:00").do(parsing_stock)
     Thread(target=schedule_checker).start()
     bot.polling(none_stop=True, interval=0)
 
