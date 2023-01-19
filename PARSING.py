@@ -952,12 +952,6 @@ def parsing_stock():
     close_browser()
 
 
-    # проверяем акции на изменение
-    #compare_docx_files()
-    #convert("изменения в акциях.docx")
-
-    # создаем копию файла "акции.docx" с именем "акции_old.docx"
-    #create_copy_docx()
 
     if total_error != 0:
         msg = " ================= Всего ошибок парсинга: " + str(total_error) + '\n' + "Попробуйте запустить парсинг еще раз ================= "
@@ -966,7 +960,10 @@ def parsing_stock():
         print('Акции успешно спарсены, ожидайте...')
         try:
             # Конвертируем(создаём) "акции.docx" в "акции.pdf"
-            edit_files_stocks()
+            if edit_files_stocks() == 1:
+                print("==== ЕСТЬ НОВЫЕ АКЦИИ ====")
+            else:
+                print("==== НОВЫХ АКЦИЙ НЕТ ====")
             convert("все акции.docx", "все акции.pdf")
         except:
             edit_files_stocks()

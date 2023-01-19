@@ -249,8 +249,8 @@ def schedule_checker():
 
 if __name__ == '__main__':
     print("БОТ ЗАПУЩЕН")
-    schedule.every().day.at("18:25").do(parsing_price)
-    schedule.every().day.at("18:31").do(parsing_stock)
+    schedule.every().day.at("00:00").do(parsing_price)
+    schedule.every().day.at("00:20").do(parsing_stock)
     Thread(target=schedule_checker).start()
     bot.polling(none_stop=True, interval=0)
 

@@ -9,6 +9,7 @@ from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 
 import docx
 from docx.shared import Cm, Pt
+from docx.enum.text import WD_COLOR_INDEX
 
 STOCK_FILE_NAME = "акции.docx"
 FILE_NAME_PRICE = "цены за всё время.xlsx"
@@ -310,6 +311,7 @@ def erase_content():
         doc.save(file_name)
 # разделить акции по месяцам и тд
 def edit_files_stocks():
+        print("Собираем файл...")
         months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь",
                   "Декабрь"]
 
@@ -365,6 +367,7 @@ def edit_files_stocks():
                 print("создан файл " + new_name)
 
         # сверяем текующие спрасенные данные с файлом "все акции.docx" и если чего то нет => добавляем их в файл
+
         def checkfile_allstocks():
             # считываем файл "все акции.docx"
             doc_all_stocks_name = "все акции.docx"
@@ -379,12 +382,23 @@ def edit_files_stocks():
             doc_actual = docx.Document(doc_actual_name)
             all_paras_act = doc_actual.paragraphs
 
+            bnewstock = 0
             for para in all_paras_act:
                 if para.text not in all_text_alls:
+                    bnewstock = 1
                     print("Следующей записи нет в файле \"" + doc_all_stocks_name + "\":\n" + para.text)
-                    doc_all_stock.add_paragraph("НОВАЯ ЗАПИСЬ(дата добавления " + date + "):")
+                    # также выделяем маркером
+                    p = doc_all_stock.add_paragraph()
+                    p.add_run("НОВАЯ ЗАПИСЬ(дата добавления " + date + "):").font.highlight_color = WD_COLOR_INDEX.YELLOW
                     doc_all_stock.add_paragraph(para.text)
                     doc_all_stock.save(doc_all_stocks_name)
+            if bnewstock == 1:
+                return 1
+            else:
+                return 0
 
         edit_month_file()
-        checkfile_allstocks()
+        if checkfile_allstocks() == 1:
+            return 1
+        else:
+            return 0
