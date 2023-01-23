@@ -189,6 +189,8 @@ def get_month_stocks_data(message):
             bot.send_document(message.chat.id, file2)
         else:
             bot.send_message(message.chat.id, "Акций за этот период не найдено!", reply_markup=a)
+    else:
+        bot.send_message(message.chat.id, "Неверный ввод!", reply_markup=a)
     call_buttons_1(message)
 
 # вызвать кнопки
@@ -249,12 +251,10 @@ def schedule_checker():
 
 if __name__ == '__main__':
     print("БОТ ЗАПУЩЕН")
-    schedule.every().day.at("00:00").do(parsing_price)
-    schedule.every().day.at("00:20").do(parsing_stock)
+    schedule.every().day.at("19:27").do(parsing_price)
+    schedule.every().day.at("19:37").do(parsing_stock)
     Thread(target=schedule_checker).start()
     bot.polling(none_stop=True, interval=0)
-
-
 
 
 

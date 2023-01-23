@@ -13,6 +13,7 @@ import aspose.words as aw
 from OUTPUT import check_sheet_in_excel
 from OUTPUT import add_excel
 from OUTPUT import add_listsummary
+
 from OUTPUT import add_txtstock_in_docx
 from OUTPUT import add_imgstock_in_docx
 from OUTPUT import add_company_name
@@ -30,11 +31,10 @@ def parsing_price():
 
     def parsing_lider():
         def get_page():
-            # chromedriver должен быть ТОЙ ЖЕ ВЕРСИИ ЧТО И установленный CHROME
             browser.get("https://artvod.ru/product-category/oborudovanie/")
             print("===================== Парсится сайт artvod.ru =====================")
         def pars_water():
-            # ПАРСИМ ЦЕНЫ
+            # ПАРСИНГ ЦЕН
             def pars_tara():
                 # парсим название позиций во вкладке оборудование
                 item_class_name = "vitrina_name"
@@ -123,6 +123,7 @@ def parsing_price():
                 print(water_name.text)
 
                 values_list.append(water_name.text)  # далее в excel
+
             def find_price():
                 price_class_name = "price-col"
                 WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CLASS_NAME, price_class_name)))
@@ -158,9 +159,11 @@ def parsing_price():
         get_page()
         parsing()
     def parsing_voda174_krystal():
+
         def get_page():
             browser.get("https://voda174.ru/")
             print("===================== Парсится сайт voda174.ru =====================")
+
         def parsing():
             # при покупке одной бутылки
             price_xpath1 = "/html/body/div[1]/div[2]/div[4]/div[3]/div/div[7]/div/div/a"
@@ -726,7 +729,6 @@ def parsing_stock():
         def get_page():
             browser.get("https://aqua-mobil.ru/")
             print("===================== Парсится сайт aqua-mobil.ru =====================")
-
 
             WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[1]/div[1]/ul/li[8]/a")))
             sale_button = browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[1]/ul/li[8]/a")
