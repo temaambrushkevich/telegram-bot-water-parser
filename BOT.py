@@ -90,7 +90,6 @@ def get_month_prices_data(message):
             i = 0
             for sheet_name in xlfile.sheetnames:
                 if i != 0:
-                    # if sheet_name[3:10] != date[3:10]:
                     if sheet_name[3:10] != m_and_y:
                         # удаляем ненужный лист
                         del xlfile[sheet_name]
@@ -109,7 +108,6 @@ def get_month_prices_data(message):
                 else:
                     del_list.append(i)
                 i += 1
-            # sheet.delete_rows()
             xlfile.save(month_file_name)
 
             # Удаляем лишние строки, не относящиеся к выбранному месяцу
@@ -255,8 +253,3 @@ if __name__ == '__main__':
     schedule.every().day.at("19:37").do(parsing_stock)
     Thread(target=schedule_checker).start()
     bot.polling(none_stop=True, interval=0)
-
-
-
-print("\nPress any key")
-console_admin_input = input()

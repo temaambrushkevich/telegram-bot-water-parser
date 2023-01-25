@@ -353,9 +353,12 @@ def edit_files_stocks():
                 # добавляем новые акции в файл "акции _m_ _y_.docx"
                 if len(add_stocks) != 0:
                     for stock in add_stocks:
-                        doc_m_y_old.add_paragraph("НОВАЯ ЗАПИСЬ(дата добавления " + date + "):")
+                        p = doc_m_y_old.add_paragraph()
+                        # также выделяем маркером
+                        p.add_run("НОВАЯ ЗАПИСЬ(дата добавления " + date + "):").font.highlight_color = WD_COLOR_INDEX.YELLOW
                         doc_m_y_old.add_paragraph(stock)
                         doc_m_y_old.save(docx_name_old)
+
             # добавляем дату в файл db.txt если ее там нет и создаем новый файл
             else:
                 print("Дата не найдена в bd.txt")
